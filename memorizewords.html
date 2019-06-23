@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="http://code.jquery.com/jquery-3.0.0.min.js"></script>
+    <script src='voicerss-tts.min.js'></script>
     <link rel="stylesheet" type="text/css" href="mutual.css">
     <title>Memorize Words</title>
 </head>
@@ -32,6 +33,15 @@ $(document).ready(function(e){
                     if(Math.floor(Math.random() * 2) == 0 ){
                         lbl_RANDOMWORD.innerHTML=data.eng;
                         lbl_RANDOMWORDANSWER.innerHTML=data.tur;
+                        VoiceRSS.speech({
+                            key: '5ecd6f8fc1104c3ca4b7f83186a61e7c',
+                            src: data.eng,
+                            hl: 'en-us',    
+                            r: 0, 
+                            c: 'mp3',
+                            f: '44khz_16bit_stereo',
+                            ssml: false
+                        }); 
                     }
                     else{
                         lbl_RANDOMWORD.innerHTML=data.tur;
