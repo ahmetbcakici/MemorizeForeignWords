@@ -1,0 +1,37 @@
+<!-- Remove button of submit , make the proccess of save just "ENTER" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="http://code.jquery.com/jquery-3.0.0.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="mutual.css">
+    <title>Save Words</title>
+</head>
+<body>
+    <input type="button" onclick="location.href='index.html';" value="BACK">
+    <form>
+        Eng<input type="text" id="eng"><br>
+        Tur<input type="text" id="tur"><br>
+    </form>
+</body>
+<script>
+$(document).ready(function(e){
+    document.getElementById("eng").focus();
+    $('#tur').keyup(function(e){
+        if(e.keyCode == 13){
+        var eng = $('#eng').val();
+        var tur = $('#tur').val();
+        $.ajax({
+            type:'POST',
+            data:{eng:eng,tur:tur},
+            url:"insert.php"
+        })
+        document.getElementById("eng").focus();
+        document.getElementById("eng").value = "";
+        document.getElementById("tur").value = "";
+        }
+    });
+});
+</script>
+</html>
