@@ -1,4 +1,5 @@
 <!-- SELECT * FROM words ORDER BY RAND() LIMIT 1; -->
+<?php $con = new mysqli('localhost','root','','memorizewords'); ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,6 +20,10 @@
 var audio = new Audio("audio.wav");
 audio.volume = 0.05;
 $(document).ready(function(e){
+    <?php         
+        $update = "UPDATE words SET process = '0'";
+        if($con->query($update) === TRUE){}
+    ?>
     var txt_INPUT = document.getElementById("txt_INPUT");
     var lbl_RANDOMWORDANSWER = document.getElementById('lbl_RANDOMWORDANSWER');
     var lbl_RANDOMWORD = document.getElementById('lbl_RANDOMWORD');
