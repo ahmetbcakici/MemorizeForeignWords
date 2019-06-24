@@ -18,7 +18,7 @@
 <script>
 var audio = new Audio("audio.wav");
 audio.volume = 0.05;
-$(document).ready(function(e){   
+$(document).ready(function(e){
     var txt_INPUT = document.getElementById("txt_INPUT");
     var lbl_RANDOMWORDANSWER = document.getElementById('lbl_RANDOMWORDANSWER');
     var lbl_RANDOMWORD = document.getElementById('lbl_RANDOMWORD');
@@ -33,15 +33,7 @@ $(document).ready(function(e){
                     if(Math.floor(Math.random() * 2) == 0 ){
                         lbl_RANDOMWORD.innerHTML=data.eng;
                         lbl_RANDOMWORDANSWER.innerHTML=data.tur;
-                        VoiceRSS.speech({
-                            key: '5ecd6f8fc1104c3ca4b7f83186a61e7c',
-                            src: data.eng,
-                            hl: 'en-us',    
-                            r: 0, 
-                            c: 'mp3',
-                            f: '44khz_16bit_stereo',
-                            ssml: false
-                        }); 
+                        speech(data.eng);
                     }
                     else{
                         lbl_RANDOMWORD.innerHTML=data.tur;
@@ -60,7 +52,7 @@ $(document).ready(function(e){
                 getword();
             }
             else{
-                //audio.play();
+                audio.play();
                 var gelen = document.getElementById("lbl_RANDOMWORDANSWER").textContent;
                 words.push(gelen);
                 getword();
@@ -71,6 +63,8 @@ $(document).ready(function(e){
     $('#txt_INPUT').keydown(function(e){
         if(e.keyCode == 16){
             lbl_RANDOMWORDANSWER.style.display = 'block';
+            speech(lbl_RANDOMWORDANSWER.innerHTML);
+
         }
     });
     $('#txt_INPUT').keyup(function(e){
@@ -78,6 +72,18 @@ $(document).ready(function(e){
             lbl_RANDOMWORDANSWER.style.display = 'none';
         }
     });
+    function speech(word){
+        VoiceRSS.speech({
+            key: '5ecd6f8fc1104c3ca4b7f83186a61e7c',
+            src: word,
+            hl: 'en-us',    
+            r: 0, 
+            c: 'mp3',
+            f: '44khz_16bit_stereo',
+            ssml: false
+        });
+    }
 });
+
 </script>
 </html>
