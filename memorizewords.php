@@ -19,6 +19,7 @@
 <script>
 var falseansweraudio = new Audio("audio.wav");
 var speechspamcontrol = false;
+var isanswerenglish = false;
 falseansweraudio.volume = 0.05;
 $(document).ready(function(e){
     <?php         
@@ -40,10 +41,12 @@ $(document).ready(function(e){
                         lbl_RANDOMWORD.innerHTML=data.eng;
                         lbl_RANDOMWORDANSWER.innerHTML=data.tur;
                         speech(data.eng);
+                        isanswerenglish = false;
                     }
                     else{
                         lbl_RANDOMWORD.innerHTML=data.tur;
                         lbl_RANDOMWORDANSWER.innerHTML=data.eng;
+                        isanswerenglish = true;
                     }
                 },
                 error:function(data){getword();alert("x");}
@@ -62,18 +65,16 @@ $(document).ready(function(e){
                 var gelen = document.getElementById("lbl_RANDOMWORDANSWER").textContent;
                 words.push(gelen);
                 getword();
-            }
-            
+            }            
         }
     });
     $('#txt_INPUT').keydown(function(e){
         if(e.keyCode == 16){
             lbl_RANDOMWORDANSWER.style.display = 'block';
-            if(speechspamcontrol == false){
+            if(speechspamcontrol == false && isanswerenglish == true){
             speech(lbl_RANDOMWORDANSWER.innerHTML);
             speechspamcontrol = true;
             }
-
         }
     });
     $('#txt_INPUT').keyup(function(e){
