@@ -17,8 +17,9 @@
     <label hidden id='lbl_RANDOMWORDANSWER'></label>
 </body>
 <script>
-var audio = new Audio("audio.wav");
-audio.volume = 0.05;
+var falseansweraudio = new Audio("audio.wav");
+var speechspamcontrol = false;
+falseansweraudio.volume = 0.05;
 $(document).ready(function(e){
     <?php         
         $update = "UPDATE words SET process = '0'";
@@ -57,24 +58,28 @@ $(document).ready(function(e){
                 getword();
             }
             else{
-                audio.play();
+                falseansweraudio.play();
                 var gelen = document.getElementById("lbl_RANDOMWORDANSWER").textContent;
                 words.push(gelen);
                 getword();
             }
             
         }
-    });    
+    });
     $('#txt_INPUT').keydown(function(e){
         if(e.keyCode == 16){
             lbl_RANDOMWORDANSWER.style.display = 'block';
+            if(speechspamcontrol == false){
             speech(lbl_RANDOMWORDANSWER.innerHTML);
+            speechspamcontrol = true;
+            }
 
         }
     });
     $('#txt_INPUT').keyup(function(e){
         if(e.keyCode == 16){
             lbl_RANDOMWORDANSWER.style.display = 'none';
+            speechspamcontrol = false;
         }
     });
     function speech(word){
