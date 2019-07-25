@@ -1,13 +1,12 @@
-<!-- SELECT * FROM words ORDER BY RAND() LIMIT 1; -->
-<?php $con = new mysqli('localhost','root','','memorizewords'); ?>
+<?php $con = new mysqli('localhost','root','','memorizeforeignwords'); ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="http://code.jquery.com/jquery-3.0.0.min.js"></script>
-    <script src='voicerss-tts.min.js'></script>
-    <link rel="stylesheet" type="text/css" href="mutual.css">
+    <script src='dynamic/script/voicerss-tts.min.js'></script>
+    <link rel="stylesheet" type="text/css" href="dynamic/style/mutual.css">
     <title>Memorize Words</title>
 </head>
 <body>
@@ -17,22 +16,22 @@
     <label hidden id='lbl_RANDOMWORDANSWER'></label>
 </body>
 <script>
-var falseansweraudio = new Audio("audio.wav");
+var falseansweraudio = new Audio("dynamic/audio/falseanswer.wav");
 var speechspamcontrol = false;
 var isanswerenglish = false;
 falseansweraudio.volume = 0.05;
 $(document).ready(function(e){
-    <?php         
-        $update = "UPDATE words SET process = '0'";
-        if($con->query($update) === TRUE){}
-    ?>
+    // <?php         
+    //     $update = "UPDATE words SET process = '0'";
+    //     if($con->query($update) === TRUE){}
+    // ?>
     var txt_INPUT = document.getElementById("txt_INPUT");
     var lbl_RANDOMWORDANSWER = document.getElementById('lbl_RANDOMWORDANSWER');
     var lbl_RANDOMWORD = document.getElementById('lbl_RANDOMWORD');
     txt_INPUT.focus();
     function getword(){
         $.ajax({
-                url:"insert.php",
+                url:"database.php",
                 type:"POST",
                 data:"value=blabla",
                 dataType:"JSON",
@@ -49,21 +48,36 @@ $(document).ready(function(e){
                         isanswerenglish = true;
                     }
                 },
-                error:function(data){getword();alert("x");}
+                error: function(jqXHR, textStatus, errorThrown) {
+                    console.log(textStatus, errorThrown);
+                    getword();
+                }
             });
             txt_INPUT.value = "";
     }
+    function sendanswer(control,word){
+        $.ajax({
+            method:"post",
+            url:"database.php",
+            data:{control:control,word:word},
+            success:function(res){
+                console.log(res);
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.log(textStatus, errorThrown);
+            }
+        });
+    }
     getword();
-    var words = [];
     $('#txt_INPUT').keyup(function(e){
         if(e.keyCode == 13 && txt_INPUT.value != ""){
             if(txt_INPUT.value == lbl_RANDOMWORDANSWER.innerHTML){
+                sendanswer(true,lbl_RANDOMWORDANSWER.innerHTML);
                 getword();
             }
             else{
                 falseansweraudio.play();
-                var gelen = document.getElementById("lbl_RANDOMWORDANSWER").textContent;
-                words.push(gelen);
+                sendanswer(false,lbl_RANDOMWORDANSWER.innerHTML);
                 getword();
             }            
         }

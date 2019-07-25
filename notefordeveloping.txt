@@ -1,0 +1,5 @@
+Add to your app that daily-weekly-monthly quiz and you can delete a word when it is okay for all quiz
+
+About permanently_words : I'm not sure is it a good idea? Because lets think there could be too many users and
+this means too many words so too many datas , you should have a strongly server but probably it is not possible for now
+
