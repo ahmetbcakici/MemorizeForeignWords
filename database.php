@@ -38,10 +38,16 @@
         //if($con->query($update) === TRUE){}
     }
     if(@$_POST['eng']){
-        $eng = $_POST['eng'];
-        $tur = $_POST['tur'];
-        $insert = "INSERT INTO active_words (wordinforeign,wordinnative) VALUES ('$eng','$tur')";
-        if($con->query($insert) === TRUE){}
+        $selectcount = "SELECT count(*) FROM active_words";
+        $result = $con->query($selectcount);
+        if($row = $result->fetch_assoc())
+            if($row["count(*)"] >= 10) echo "Aynı anda 10'dan fazla kelime çalışamazsınız!";
+            else{
+                $eng = $_POST['eng'];
+                $tur = $_POST['tur'];
+                $insert = "INSERT INTO active_words (wordinforeign,wordinnative) VALUES ('$eng','$tur')";
+                if($con->query($insert) === TRUE){}
+            }
     }
     if(@$_POST['control']){
         $wordthatcame = $_POST['word'];
@@ -65,7 +71,7 @@
             if($con->query($update) === TRUE){}
             countercontrol($id_wordthatcame);            
         }
-        else{//CONTROLE POINT FOR 5
+        else{
             $update = "UPDATE repeating SET counter = counter + 1 WHERE word_id = '$id_wordthatcame'";
             if($con->query($update) === TRUE){}
             if(countercontrol($id_wordthatcame)){

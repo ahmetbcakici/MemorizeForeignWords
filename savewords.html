@@ -13,23 +13,35 @@
         Foreign:<input type="text" id="eng"><br>
         Native:<input type="text" id="tur"><br>
     </form>
+    <div id="warningmessage" class="alert alert-warning" style="visibility:hidden">
+        <strong>Success!</strong> Indicates a successful or positive action.
+    </div>
 </body>
 <script>
 $(document).ready(function(e){
-    document.getElementById("eng").focus();
-    $('#tur').keyup(function(e){
-        if(e.keyCode == 13){
-        var eng = $('#eng').val();
-        var tur = $('#tur').val();
-        $.ajax({
-            type:'POST',
-            data:{eng:eng,tur:tur},
-            url:"database.php"
-        })
+    function clearscreen(){
         document.getElementById("eng").focus();
         document.getElementById("eng").value = "";
         document.getElementById("tur").value = "";
-        }
+    }
+    document.getElementById("eng").focus();
+    $('#tur').keyup(function(e){
+        if(e.keyCode == 13){
+            var eng = $('#eng').val();
+            var tur = $('#tur').val();
+            $.ajax({
+                type:'POST',
+                data:{eng:eng,tur:tur},
+                url:"database.php",
+                success:function(res){
+                    $("#warningmessage").text(res).css("visibility","visible");
+                    setTimeout(function () {
+                        $("#warningmessage").text(res).css("visibility","hidden");
+                    }, 1500);
+                }
+            })
+            clearscreen();
+        }        
     });
 });
 </script>
