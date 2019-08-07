@@ -33,7 +33,7 @@ $(document).ready(function(e){
         $.ajax({
                 url:"database.php",
                 type:"POST",
-                data:"value=blabla",
+                data:"value=null",
                 dataType:"JSON",
                 success:function(data){
                     if(Math.floor(Math.random() * 2) == 0 ){
