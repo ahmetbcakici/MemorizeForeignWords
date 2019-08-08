@@ -23,7 +23,7 @@
         return false;
     }
     if(@$_POST['value']){
-        $select = "SELECT id,wordinforeign,wordinnative FROM active_words/* where process = '0'*/ORDER BY RAND()";
+        $select = "SELECT id,wordinforeign,wordinnative FROM active_words/* where process = 0 */ ORDER BY RAND()";
         $result = $con->query($select);
         if($result->num_rows>0){
             $row = $result->fetch_assoc();

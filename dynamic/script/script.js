@@ -1,21 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="http://code.jquery.com/jquery-3.0.0.min.js"></script>
-    <script src='dynamic/script/voicerss-tts.min.js'></script>
-    <script type="text/javascript" src="dynamic/script/script.js"></script>
-    <link rel="stylesheet" type="text/css" href="dynamic/style/mutual.css">
-    <title>Memorize Words</title>
-</head>
-<body>
-    <input type="button" onclick="location.href='index.html';" value="BACK"><br>
-    <label id='lbl_RANDOMWORD'></label><br>
-    <input type="text" id="txt_INPUT" autocomplete="off"><br>   
-    <label hidden id='lbl_RANDOMWORDANSWER'></label>
-</body>
-<!-- <script>
 var falseansweraudio = new Audio("dynamic/audio/falseanswer.wav");
 var speechspamcontrol = false;
 var isanswerenglish = false;
@@ -109,6 +91,3 @@ $(document).ready(function(e){
         });
     }
 });
-
-</script> -->
-</html>
